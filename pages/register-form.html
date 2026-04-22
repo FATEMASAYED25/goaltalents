@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Custom Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+        <!-- navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item fs-4">
+                        <a class="nav-link active" aria-current="page" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item fs-4">
+                        <a class="nav-link" href="talents.html">Talents</a>
+                    </li>
+                    <li class="nav-item fs-4">
+                        <a class="nav-link" href="profile.html">Profile</a>
+                    </li>
+                    <li class="nav-item fs-4 cta">
+                        <a class="nav-link" href="register-form.html">Sign Up</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+  <div class="container">
+    <div class="form-container">
+      
+      <h4 class="form-title">
+        Your journey starts here <br>
+        Take the first step
+      </h4>
+
+      <form>
+        <input type="text" class="form-control" placeholder="Full Name">
+        <input type="email" class="form-control" placeholder="Email">
+        <input type="text" class="form-control" placeholder="+20 10 1234 5678">
+
+        <select class="form-select">
+          <option selected disabled>Select your position</option>
+          <option>Attaker</option>
+          <option>Defender</option>
+          <option>Goal Keepr</option>
+        </select>
+
+        <input type="text" class="form-control" placeholder="Birth Year">
+        <input type="text" class="form-control" placeholder="Club (players)">
+        <input type="text" class="form-control" placeholder="Years of experience">
+
+
+        <button id ="register-button"  type="submit" class="btn btn-custom mt-3">Submit</button>
+      </form>
+
+    </div>
+  </div>
+
+  
+    <!-- footer -->
+    <footer class="bg-dark text-white  py-4">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-4">
+                    <h5>About</h5>
+                    <p>Some text here</p>
+                </div>
+
+                <div class="col-md-4">
+                    <h5>Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Home</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4">
+                    <h5>Contact</h5>
+                    <p>Email@example.com</p>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,4 +1,43 @@
-  .video-hero {
+ body{
+    background-color: #011401;
+ }
+ .section{
+  margin: 9rem auto;
+ }
+ .cta{
+  background-color: #77ec38;
+  color: black;
+  font-weight: bold;
+  border-radius: 5px;
+ }
+ 
+ .testmonial-card{
+  max-width: 18rem; 
+  color:white;
+  background-color: #011401;
+ }
+
+ .our-masion{
+  background-image: linear-gradient(6deg, #000000cf, #77ec3852 48%),url("../imgs/our-mesion.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 20px;
+  overflow: hidden; 
+  min-height: 28rem;
+
+ }
+ .our-masion-paragraph{
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+        padding-left: 2rem;
+        justify-content: center;
+    align-items: flex-start;
+    max-width: 50%;
+    color: white;
+    font-weight: bold;
+ }
+ .video-hero {
       position: relative;
       height: 100vh;
       overflow: hidden;
@@ -21,7 +60,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.5); 
+      background: linear-gradient(6deg, #000000cf, #77ec3852 48%);
       z-index: 0;
     }
 
@@ -66,6 +105,51 @@
   object-fit: cover;
   object-position: top;
 }
+
+    .form-container {
+      background-color: #000;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 40px 30px;
+      border-radius: 20px;
+    }
+
+    .form-title {
+      text-align: center;
+      color: #39ff14;
+      margin-bottom: 30px;
+    }
+
+    .form-control,
+    .form-select {
+      border-radius: 25px;
+      padding: 15px;
+      background-color: #dcdcdc;
+      border: none;
+      margin-bottom: 15px;
+    }
+
+    .form-control::placeholder {
+      color: #666;
+    }
+
+    textarea.form-control {
+      border-radius: 20px;
+      resize: none;
+    }
+
+    .btn-custom {
+      background-color: #39ff14;
+      border: none;
+      border-radius: 25px;
+      padding: 12px;
+      width: 100%;
+      font-weight: bold;
+    }
+
+    .btn-custom:hover {
+      background-color: #2ecc71;
+    }
 
     @media (max-width: 768px) {
   .video-hero {
