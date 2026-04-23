@@ -43,21 +43,21 @@
         Take the first step
       </h4>
 
-      <form>
-        <input type="text" class="form-control" placeholder="Full Name">
-        <input type="email" class="form-control" placeholder="Email">
-        <input type="text" class="form-control" placeholder="+20 10 1234 5678">
+      <form method="POST" action="/submit">
+        <input type="text"  name="full_name" class="form-control" placeholder="Full Name">
+        <input type="email"  name="email" class="form-control" placeholder="Email">
+        <input type="text" name="phone" class="form-control" placeholder="+20 10 1234 5678">
 
-        <select class="form-select">
+        <select  name="position" class="form-select">
           <option selected disabled>Select your position</option>
           <option>Attaker</option>
           <option>Defender</option>
           <option>Goal Keepr</option>
         </select>
 
-        <input type="text" class="form-control" placeholder="Birth Year">
-        <input type="text" class="form-control" placeholder="Club (players)">
-        <input type="text" class="form-control" placeholder="Years of experience">
+        <input type="text" name="birth_year" class="form-control" placeholder="Birth Year">
+        <input type="text" name="club" class="form-control" placeholder="Club (players)">
+        <input type="text" name="experience"  class="form-control" placeholder="Years of experience">
 
 
         <button id ="register-button"  type="submit" class="btn btn-custom mt-3">Submit</button>
