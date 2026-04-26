@@ -18,7 +18,7 @@
  }
 
  .our-masion{
-  background-image: linear-gradient(6deg, #000000cf, #77ec3852 48%),url("../imgs/our-mesion.png");
+  background-image: linear-gradient(6deg, #000000cf, #77ec3852 48%),url("/static/imgs/our-mesion.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
