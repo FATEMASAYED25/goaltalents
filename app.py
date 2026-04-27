@@ -8,6 +8,7 @@ app = Flask(__name__)
 
 #the place where json files that store data 
 filename = "db/talents_form.json"
+contentfile = "db/player_videos.json"
 
 
 #routing the page using render_template library
@@ -30,21 +31,50 @@ def talents():
 @app.route("/player-profile/<path:email>")
 def profile(email):
 
-    # 1. Open the "database" file
- 
+    # 1. get all users from  "database" file
+     user = None
      with open(filename, "r") as file:
     #convert json arry into python array
         all_users = json.load(file)
   
-    
+     
     # search the user using his email
-     for user in all_users:
-        if user.get('email') == email:
-
-         return render_template("player-profile.html" , user=user)
+     for targetuser in all_users:
+        if targetuser.get('email') == email:
+            user=targetuser
+    
+    #return message if the user not found depuging code 
+    
         
-# 3. If the loop finishes and find nothing
-     return "User profile not found", 404
+    # 2. Get User Videos from the content halders file
+        # Find ALL Videos for this user
+     user_videos = []
+     try:
+        with open(contentfile, "r") as file:
+            all_videos = json.load(file)
+            # Filter the videos to only show ones belonging to this email
+            for video in all_videos:
+                if video.get('email') == email:
+                    user_videos.append(video)
+     except (FileNotFoundError, json.JSONDecodeError):
+        # If file doesn't exist, just keep the list empty
+        user_videos = []
+        # addapt youtube url videos
+     for video in user_videos:
+        raw_url = video.get('video_url', '')
+        
+        # Convert youtu.be links
+        if "youtu.be/" in raw_url:
+            video['video_url'] = raw_url.replace("youtu.be/", "www.youtube.com/embed/").split('?')[0]
+        
+        # Convert standard watch?v= links
+        elif "watch?v=" in raw_url:
+            video['video_url'] = raw_url.replace("watch?v=", "embed/").split('&')[0]
+     return render_template("player-profile.html" , user=user , videos=user_videos )
+      
+    
+        
+
 
 
 
@@ -54,7 +84,7 @@ def profile(email):
 
 def submit():
 
-    #get the data from javascript file 
+    #get the data from json file 
     user_data = request.get_json()
   
 
@@ -84,7 +114,40 @@ def submit():
         "redirect_url": f"/player-profile/{email}"}), 200
 
 
-    
+#addin a logic for upload videos by the players
+
+@app.route('/upload-video' , methods=['POST'])
+
+def upload():
+        #get the data from json file 
+    newcontent= request.get_json()
+  
+
+
+    # 1. Try to get the existing list of the content
+    try:
+        with open(contentfile, "r") as file:
+            all_videos = json.load(file) 
+    except (FileNotFoundError, json.JSONDecodeError):
+        # If the file doesn't exist yet, start an empty list
+        all_videos = []
+
+        #add the user content to the all contents aaray
+
+    all_videos.append(newcontent)
+
+         # 3. store the data inside player_videos.json file
+    with open(contentfile, "w") as file:
+        json.dump(all_videos, file, indent=4)
+
+         #return a messsage 
+    return jsonify(
+        {"status": "success",
+        "message": "Data stored in JSON file",
+        }), 200
+
+
+  
 if __name__ == '__main__':
     app.run(debug=True)
 

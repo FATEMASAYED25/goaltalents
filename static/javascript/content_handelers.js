@@ -1,0 +1,53 @@
+let upload_video = document.getElementById("upload-video");
+let video_title =  document.getElementById("content-title");
+let video_url = document.getElementById("content-body");
+
+
+
+upload_video.addEventListener("click" , async(e)=>{
+     
+    e.preventDefault();
+
+    // Get the email directly from the current URL
+    const pathParts = window.location.pathname.split('/');
+    const userEmail = pathParts[pathParts.length - 1];
+
+
+    //create an object with the data 
+    const content = {
+        title:video_title.value,
+        video_url:video_url.value,
+        timestamp: new Date().toISOString(),
+        email:userEmail
+    }
+    console.log(content)
+    //send the contetnt to flask
+    const response= await fetch('/upload-video',{
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body:JSON.stringify(content)
+    });
+
+    if (response.ok) {
+        alert("Content added!");
+        location.reload(); // Refresh to see the new content
+    }
+    
+
+
+});
+
+//checking if the user register to appear upload form 
+document.addEventListener("DOMContentLoaded", () => {
+    const uploadSection = document.getElementById("upload-section");
+    
+    // 1. Get the current URL path
+    const path = window.location.pathname; 
+    
+    // 2. Check if the path contains an email (looks for the '@' symbol)
+    if (path.includes("@")) {
+        uploadSection.style.display = "block"; // Show the div
+    } else {
+        uploadSection.style.display = "none";  // Keep it hidden
+    }
+});

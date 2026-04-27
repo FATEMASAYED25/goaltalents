@@ -80,6 +80,13 @@
 .ourtalents-media {
   position: relative;
 }
+.profile-image{
+  margin-right: 2rem;
+}
+.profile-image img{
+  width: 5rem;
+  height: 5rem;
+}
 
 /* overlay layer */
 .media-overlay {
