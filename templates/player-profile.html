@@ -25,9 +25,7 @@
                     <li class="nav-item fs-4">
                         <a class="nav-link" href="{{url_for('talents')}}">Talents</a>
                     </li>
-                    <li class="nav-item fs-4">
-                        <a class="nav-link" href="{{url_for('profile')}}">Profile</a>
-                    </li>
+               
                     <li class="nav-item fs-4 cta">
                         <a class="nav-link" href="{{url_for('register')}}">Sign Up</a>
                     </li>
@@ -45,15 +43,15 @@
 
     <div class="container">
         <h1>Player Data</h1>
+        <p>{{ user.full_name}}</p>
+        <p>position: {{ user.position }}</p>
+        <p>Birht Year : birth_year</p>
+        <p>Club:  {{ user.club}}</p>
+        <p>experience :  {{ user.club}}</p>
 
     </div>
-    <div class="container">
-        <h1>About Player </h1>
+  
 
-    </div>
-    <div class="container">
-        <h1>player videos</h1>
-    </div>
     
 </body>
 </html>
