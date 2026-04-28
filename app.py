@@ -25,12 +25,59 @@ def register():
 #routing talent page
 @app.route('/talents')
 def talents():
-    return render_template("talents.html")
+
+  # 2. Get User Videos from the content halders file
+    # Find ALL Videos for this user
+
+
+    with open(contentfile, "r") as file:
+        all_videos = json.load(file)
+
+
+    # 1. get all users from  "database" file
+  
+    with open(filename, "r") as file:
+    #convert json arry into python array
+        all_users = json.load(file)
+
+    for video in all_videos:
+        raw_url = video.get('video_url', '')
+    
+    # Convert youtu.be links
+    if "youtu.be/" in raw_url:
+        video['video_url'] = raw_url.replace("youtu.be/", "www.youtube.com/embed/").split('?')[0]
+    
+    # Convert standard watch?v= links
+    elif "watch?v=" in raw_url:
+        video['video_url'] = raw_url.replace("watch?v=", "embed/").split('&')[0]
+    #get the user videos and user data
+
+    metadata=[]
+    # search the user using his email
+    for targetuser in all_users :
+        usermail= targetuser['email']
+        for video in all_videos:
+            videomail=video['email']
+            if videomail == usermail:
+
+                compined_data={
+                    "user_info": targetuser,
+                    "video_info": video
+                }
+                metadata.append(compined_data)
+
+
+
+    
+
+    return render_template("talents.html" , metadata=metadata)
+
 
 # routing profile page depending on the user's email 
 @app.route("/player-profile/<path:email>")
 def profile(email):
-
+    # Get the 'mode' from the URL (it will be 'view' if clicked from talents page)
+     mode = request.args.get('mode')
     # 1. get all users from  "database" file
      user = None
      with open(filename, "r") as file:
@@ -42,10 +89,7 @@ def profile(email):
      for targetuser in all_users:
         if targetuser.get('email') == email:
             user=targetuser
-    
-    #return message if the user not found depuging code 
-    
-        
+       
     # 2. Get User Videos from the content halders file
         # Find ALL Videos for this user
      user_videos = []
@@ -70,7 +114,7 @@ def profile(email):
         # Convert standard watch?v= links
         elif "watch?v=" in raw_url:
             video['video_url'] = raw_url.replace("watch?v=", "embed/").split('&')[0]
-     return render_template("player-profile.html" , user=user , videos=user_videos )
+     return render_template("player-profile.html" , user=user , videos=user_videos , mode=mode )
       
     
         

@@ -37,17 +37,3 @@ upload_video.addEventListener("click" , async(e)=>{
 
 });
 
-//checking if the user register to appear upload form 
-document.addEventListener("DOMContentLoaded", () => {
-    const uploadSection = document.getElementById("upload-section");
-    
-    // 1. Get the current URL path
-    const path = window.location.pathname; 
-    
-    // 2. Check if the path contains an email (looks for the '@' symbol)
-    if (path.includes("@")) {
-        uploadSection.style.display = "block"; // Show the div
-    } else {
-        uploadSection.style.display = "none";  // Keep it hidden
-    }
-});

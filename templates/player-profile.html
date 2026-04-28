@@ -51,9 +51,10 @@
         <p>experience :  {{ user.club}}</p>
 
     </div>
+    
+    {% if mode != 'view' %}
     <hr style="border: 1px solid white; width: 100%;">
-  
-    <div id="upload-section" class="container section" style="display: none;">
+    <div  class="container section">
         <h1>upload videos</h1>
         <form method="POST" action="/upload-video">
             <input name="video_title" type="text" placeholder="Video title" id="content-title">
@@ -62,7 +63,7 @@
             <button id ="upload-video"  type="submit" class="btn btn-custom mt-3">Submit</button>
         </form>
     </div>
-
+    {% endif %}
      <hr style="border: 2px solid white; width: 100%;">
     <div class="container section">
 
