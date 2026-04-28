@@ -39,13 +39,13 @@
     <div class="container">
         <h1>the Player videos</h1>
         <ul>
-            {% for data in metadata %}
+            {% for tallent in tallents %}
             <li class="list-group-item mb-4">
 
                 <div class="d-flex">
                     <div class="profile-image">
 
-                        <a href="{{ url_for('profile', email=data.user_info.email, mode='view') }}">
+                        <a href="{{ url_for('profile', email=tallent.user.email, mode='view') }}">
                             <img src=" {{ url_for('static', filename='imgs/profile-picture.png') }}">
                         </a>
 
@@ -53,21 +53,22 @@
                     </div>
 
                     <div>
-                        <h4>Full name :{{ data.user_info.full_name}}</h4>
-                        <h4>Player position:{{ data.user_info.position}}</h4>
+                        <h4>Full name :{{ tallent.full_name }}</h4>
+                        <h4>Player position:{{ tallent.user.position}}</h4>
                      
 
                     </div>
 
                 </div>
 
-
-                <p class="mt-2">{{ data.video_info.timestamp }}</p>
+                    {% for video in tallent.videos %}
+                <p class="mt-2">{{ video.timestamp }}</p>
                 <div class="ratio ratio-16x9">
-                    <iframe src="{{ data.video_info.video_url }}" title="YouTube video player" frameborder="0"
+                    <iframe src="{{ video.video_url }}" title="YouTube video player" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen>
                     </iframe>
+                    {% endfor %}
                 </div>
 
 

@@ -11,6 +11,28 @@ filename = "db/talents_form.json"
 contentfile = "db/player_videos.json"
 
 
+#adding the class initialize the object's properties
+class PlayerProfile:
+    def __init__(self, user_data, all_videos):
+        # Properties
+        self.user = user_data
+        self.all_videos = all_videos
+        self.email = user_data.get('email')
+
+    def get_personal_videos(self):
+        """Method 1: Filters the big video list for just this player"""
+        targetvideos=[]
+        for video in self.all_videos:
+            videomail=video['email']
+            if videomail == self.email:
+               targetvideos.append(video) 
+        return targetvideos
+
+    def format_display_name(self):
+        """Method 2: Returns the name in Uppercase for a professional look"""
+        name = self.user.get('full_name', 'Unknown')
+        return name.upper()
+
 #routing the page using render_template library
 #routing home page
 @app.route("/")
@@ -40,6 +62,7 @@ def talents():
     #convert json arry into python array
         all_users = json.load(file)
 
+    # adapt youtube url
     for video in all_videos:
         raw_url = video.get('video_url', '')
     
@@ -50,33 +73,32 @@ def talents():
     # Convert standard watch?v= links
     elif "watch?v=" in raw_url:
         video['video_url'] = raw_url.replace("watch?v=", "embed/").split('&')[0]
-    #get the user videos and user data
+  
 
-    metadata=[]
+    tallents=[]
     # search the user using his email
-    for targetuser in all_users :
-        usermail= targetuser['email']
-        for video in all_videos:
-            videomail=video['email']
-            if videomail == usermail:
+    for user in all_users :
+       # Create an instance for every single user
+        profile_obj = PlayerProfile(user, all_videos)
+        clean_name = profile_obj.format_display_name()
+        videos_list = profile_obj.get_personal_videos()
 
-                compined_data={
-                    "user_info": targetuser,
-                    "video_info": video
-                }
-                metadata.append(compined_data)
-
-
-
+     
+        talent_data = {
+            "full_name": clean_name,
+            "user": user,
+            "videos": videos_list
+        }
+        tallents.append(talent_data)
     
 
-    return render_template("talents.html" , metadata=metadata)
-
+    return render_template("talents.html" , tallents=tallents)
+                               
 
 # routing profile page depending on the user's email 
 @app.route("/player-profile/<path:email>")
 def profile(email):
-    # Get the 'mode' from the URL (it will be 'view' if clicked from talents page)
+    # Get the 'mode' from the URL (it will be 'view' if clicked from talents page) this code from (chatgpt)
      mode = request.args.get('mode')
     # 1. get all users from  "database" file
      user = None
@@ -103,7 +125,7 @@ def profile(email):
      except (FileNotFoundError, json.JSONDecodeError):
         # If file doesn't exist, just keep the list empty
         user_videos = []
-        # addapt youtube url videos
+        # addapt youtube url videos this code from (chat GPT)
      for video in user_videos:
         raw_url = video.get('video_url', '')
         
