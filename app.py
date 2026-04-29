@@ -1,10 +1,22 @@
 # handel every thing
 import json
 from flask import Flask , request ,render_template ,jsonify
+from flask_mail import Mail, Message
 
 
 #initial static folder
 app = Flask(__name__)
+
+
+# Configuration for Gmail
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'your-email@gmail.com'
+app.config['MAIL_PASSWORD'] = 'your-app-password' 
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_DEFAULT_SENDER'] = 'your-email@gmail.com'
+
+mail = Mail(app)
 
 #the place where json files that store data 
 filename = "db/talents_form.json"
@@ -48,18 +60,18 @@ def register():
 @app.route('/talents')
 def talents():
 
-  # 2. Get User Videos from the content halders file
-    # Find ALL Videos for this user
+  # 1. Get User Videos from the player_videos.json file
+  
 
 
     with open(contentfile, "r") as file:
         all_videos = json.load(file)
 
 
-    # 1. get all users from  "database" file
+    # 2. get all users from  "talents_form.json" file
   
     with open(filename, "r") as file:
-    #convert json arry into python array
+
         all_users = json.load(file)
 
     # adapt youtube url
@@ -150,14 +162,13 @@ def profile(email):
 
 def submit():
 
-    #get the data from json file 
+    #get the data from form_hundeler.js and convrt it into python dictioniries
     user_data = request.get_json()
-  
-
 
     # 1. Try to get the existing list of users
     try:
         with open(filename, "r") as file:
+        # get the data from json file and transfer it into python dictinories
             all_users = json.load(file) 
     except (FileNotFoundError, json.JSONDecodeError):
         # If the file doesn't exist yet, start an empty list
@@ -171,9 +182,20 @@ def submit():
     with open(filename, "w") as file:
         json.dump(all_users, file, indent=4)
 
-    #extract the email to redirect the user to his profile 
+    #extract the email to send email and redirect the user to his profile 
     email = user_data.get("email")
-    #return a messsage 
+
+    try:
+        msg = Message(
+            subject="Welcome to Talent App!",
+            recipients=[email],
+            body=f"Hi our Best Talent ,\n\nThank you for registering on our platform! You can alwayes reach to your profile in Goaltalent by this link:\n http://127.0.0.1:5000/player-profile/{email}"
+        )
+        mail.send(msg)
+    except Exception as e:
+        print(f"Mail failed to send: {e}")
+   
+    # send the response and  redirect link for form_handeler.js to redirect the talent to his profile related to his email
     return jsonify(
         {"status": "success",
         "message": "Data stored in JSON file",
@@ -185,7 +207,7 @@ def submit():
 @app.route('/upload-video' , methods=['POST'])
 
 def upload():
-        #get the data from json file 
+       #get the data from content_handelers.js and convrt it into python dictioniries
     newcontent= request.get_json()
   
 

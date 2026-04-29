@@ -3,12 +3,11 @@ let video_title =  document.getElementById("content-title");
 let video_url = document.getElementById("content-body");
 
 
-
 upload_video.addEventListener("click" , async(e)=>{
      
     e.preventDefault();
 
-    // Get the email directly from the current URL
+    // Get the email directly from the current URL this code from (chatgpt)
     const pathParts = window.location.pathname.split('/');
     const userEmail = pathParts[pathParts.length - 1];
 
@@ -20,7 +19,7 @@ upload_video.addEventListener("click" , async(e)=>{
         timestamp: new Date().toISOString(),
         email:userEmail
     }
-    console.log(content)
+
     //send the contetnt to flask
     const response= await fetch('/upload-video',{
         method: 'post',
@@ -36,4 +35,5 @@ upload_video.addEventListener("click" , async(e)=>{
 
 
 });
+
 
